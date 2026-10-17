@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一份特別邀請</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang HK",
+        "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #fff1f6);
+      color: #5a3042;
+      overflow-x: hidden;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      padding: 32px 22px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 26px;
+      box-shadow: 0 12px 35px rgba(166, 75, 112, 0.2);
+    }
+
+    .heart {
+      font-size: 58px;
+      animation: heartbeat 1.3s infinite;
+    }
+
+    h1 {
+      margin: 12px 0;
+      color: #d94f85;
+      font-size: 28px;
+    }
+
+    p {
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .details {
+      margin: 22px 0;
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff0f5;
+      text-align: left;
+      line-height: 2;
+    }
+
+    .button-area {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      margin-top: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 22px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #yesBtn {
+      background: #e95d91;
+      color: white;
+      margin-right: 8px;
+      box-shadow: 0 5px 12px rgba(233, 93, 145, 0.3);
+    }
+
+    #yesBtn:active {
+      transform: scale(0.94);
+    }
+
+    #thinkBtn {
+      position: absolute;
+      left: 50%;
+      top: 70px;
+      transform: translateX(-50%);
+      background: #f1d5df;
+      color: #8b4d65;
+      white-space: nowrap;
+    }
+
+    #thinkBtn:active {
+      transform: scale(0.94);
+    }
+
+    #message {
+      display: none;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 15px;
+      background: #fff0a8;
+      color: #a45600;
+      font-size: 18px;
+      font-weight: bold;
+      animation: pop 0.5s ease;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 25px;
+      pointer-events: none;
+      animation: floatUp 3s linear forwards;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 12px 17px;
+      }
+
+      .button-area {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="heart">💗</div>
+
+    <h1>有一份特別邀請送給你</h1>
+
+    <p>
+      親愛的 <strong>❣️BuBu B❣️</strong>，<br>
+      你願意陪我去一次特別嘅生日約會嗎？
+    </p>
+
+    <div class="details">
+      📅 日期：<strong>2026年10月25日</strong><br>
+      📍 地點：<strong>一陣就知道</strong><br>
+      🎁 活動：<strong>一個小小驚喜</strong>
+    </div>
+
+    <p>你嘅答案係？</p>
+
+    <button id="yesBtn">我願意 💕</button>
+
+    <div class="button-area">
+      <button id="thinkBtn">讓我諗諗 🤔</button>
+    </div>
+
+    <div id="message">
+      太好啦！到時見！🥰
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const thinkBtn = document.getElementById("thinkBtn");
+    const message = document.getElementById("message");
+    const buttonArea = document.querySelector(".button-area");
+
+    let thinkCount = 0;
+
+    yesBtn.addEventListener("click", function () {
+      message.style.display = "block";
+      yesBtn.textContent = "期待見到你 ❤️";
+      thinkBtn.style.display = "none";
+
+      for (let i = 0; i < 20; i++) {
+        createHeart();
+      }
+    });
+
+    thinkBtn.addEventListener("click", function () {
+      thinkCount++;
+
+      if (thinkCount >= 3) {
+        thinkBtn.textContent = "好啦好啦，唔走喇 🦄";
+        thinkBtn.style.left = "50%";
+        thinkBtn.style.top = "70px";
+        thinkBtn.style.transform = "translateX(-50%)";
+        return;
+      }
+
+      const maxX = Math.max(
+        0,
+        buttonArea.clientWidth - thinkBtn.offsetWidth
+      );
+
+      const maxY = Math.max(
+        0,
+        buttonArea.clientHeight - thinkBtn.offsetHeight
+      );
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      thinkBtn.style.left = randomX + "px";
+      thinkBtn.style.top = randomY + "px";
+      thinkBtn.style.transform = "none";
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+
+      heart.className = "floating-heart";
+
+      heart.textContent = ["💛", "🧡", "❤️", "🥰", "✨"][
+        Math.floor(Math.random() * 5)
+      ];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 2 + Math.random() * 2 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(function () {
+        heart.remove();
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
+Create invitation webpage
