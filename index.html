@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>一份特別邀請</title>
+  <title>給 BuBu B 的生日驚喜</title>
 
   <style>
     * {
@@ -13,114 +13,348 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      padding: 18px 12px;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang HK",
         "Microsoft JhengHei", sans-serif;
-      background: linear-gradient(135deg, #ffd6e7, #fff1f6);
       color: #5a3042;
+      background: linear-gradient(135deg, #ffd6e7, #fff1f6);
       overflow-x: hidden;
     }
 
-    .card {
+    .screen {
+      display: none;
       width: 100%;
-      max-width: 430px;
-      padding: 32px 22px;
+      max-width: 480px;
+      min-height: calc(100vh - 36px);
+      margin: 0 auto;
+      padding: 28px 18px;
       text-align: center;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 26px;
       box-shadow: 0 12px 35px rgba(166, 75, 112, 0.2);
+      animation: fadeIn 0.45s ease;
     }
 
-    .heart {
-      font-size: 58px;
-      animation: heartbeat 1.3s infinite;
+    .screen.active {
+      display: block;
     }
 
     h1 {
-      margin: 12px 0;
+      margin: 12px 0 18px;
       color: #d94f85;
       font-size: 28px;
     }
 
+    h2 {
+      color: #c84c7e;
+      font-size: 22px;
+      line-height: 1.5;
+    }
+
     p {
-      line-height: 1.8;
       font-size: 16px;
+      line-height: 1.8;
     }
 
-    .details {
-      margin: 22px 0;
-      padding: 16px;
-      border-radius: 16px;
+    .big-heart {
+      margin-top: 20px;
+      font-size: 62px;
+      animation: heartbeat 1.3s infinite;
+    }
+
+    .info-box,
+    .message-box,
+    .result-box {
+      margin: 20px 0;
+      padding: 17px;
+      border-radius: 17px;
       background: #fff0f5;
+      line-height: 1.9;
+    }
+
+    .message-box {
       text-align: left;
-      line-height: 2;
+      border-left: 5px solid #e95d91;
     }
 
-    .button-area {
-      position: relative;
+    .next-btn,
+    .main-btn,
+    .option-btn {
       width: 100%;
-      height: 150px;
-      margin-top: 15px;
-    }
-
-    button {
+      margin: 8px 0;
+      padding: 14px 18px;
       border: none;
       border-radius: 999px;
-      padding: 13px 22px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.25s ease;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
 
-    #yesBtn {
-      background: #e95d91;
+    .next-btn,
+    .main-btn {
       color: white;
-      margin-right: 8px;
-      box-shadow: 0 5px 12px rgba(233, 93, 145, 0.3);
+      background: #e95d91;
+      box-shadow: 0 5px 12px rgba(233, 93, 145, 0.25);
     }
 
-    #yesBtn:active {
-      transform: scale(0.94);
+    .next-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
-    #thinkBtn {
-      position: absolute;
-      left: 50%;
-      top: 70px;
-      transform: translateX(-50%);
-      background: #f1d5df;
+    .option-btn {
       color: #8b4d65;
-      white-space: nowrap;
+      background: #fff8fb;
+      border: 2px solid #f1c7d6;
     }
 
-    #thinkBtn:active {
-      transform: scale(0.94);
+    .option-btn:active,
+    .main-btn:active,
+    .next-btn:active {
+      transform: scale(0.96);
     }
 
-    #message {
-      display: none;
-      margin-top: 18px;
-      padding: 15px;
+    .slot-machine {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 28px 0;
+    }
+
+    .slot {
+      display: flex;
+      width: 82px;
+      height: 82px;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid #e95d91;
       border-radius: 15px;
-      background: #fff0a8;
-      color: #a45600;
-      font-size: 18px;
+      background: white;
+      color: #d94f85;
+      font-size: 27px;
       font-weight: bold;
-      animation: pop 0.5s ease;
+      box-shadow: 0 5px 15px rgba(233, 93, 145, 0.25);
     }
 
-    .floating-heart {
-      position: fixed;
-      bottom: -30px;
-      font-size: 25px;
+    .slot.spinning {
+      animation: slotShake 0.12s infinite;
+    }
+
+    .image-box {
+      margin: 18px 0;
+    }
+
+    .image-box img,
+    .quiz-photo {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(166, 75, 112, 0.22);
+    }
+
+    .caption {
+      margin-top: 8px;
+      color: #9a5670;
+      font-size: 14px;
+    }
+
+    .surprise {
+      background: linear-gradient(145deg, #1b1020, #4b1f38);
+      color: white;
+    }
+
+    .surprise h1,
+    .surprise h2 {
+      color: #ffb7d2;
+    }
+
+    .surprise .image-box img {
+      border: 5px solid #ffb7d2;
+      animation: surpriseGlow 1.2s infinite alternate;
+    }
+
+    .hidden-surprise {
+      display: none;
+    }
+
+    .surprise.revealed .hidden-surprise {
+      display: block;
+      animation: surpriseIn 0.6s ease;
+    }
+
+    .surprise.revealed .loading-text {
+      display: none;
+    }
+
+    .quiz-result {
+      min-height: 32px;
+      margin: 12px 0;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    .quiz-result.correct {
+      color: #118c69;
+    }
+
+    .quiz-result.wrong {
+      color: #c45a65;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .quiz-grid .option-btn {
+      padding: 11px 4px;
+      font-size: 14px;
+    }
+
+    .three-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin: 20px 0;
+    }
+
+    .photo-question {
+      min-width: 0;
+    }
+
+    .photo-question img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(166, 75, 112, 0.18);
+    }
+
+    .photo-question .quiz-grid {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .photo-question .option-btn {
+      margin: 2px 0;
+      padding: 8px 2px;
+      font-size: 12px;
+    }
+
+    .photo-status {
+      min-height: 24px;
+      margin-top: 4px;
+      font-size: 20px;
+    }
+
+    .marquee-box {
+      position: relative;
+      height: 360px;
+      margin: 20px 0;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #ffeaf2;
+    }
+
+    .marquee-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fff4f8;
+    }
+
+    .danmaku {
+      position: absolute;
+      left: -100%;
+      z-index: 2;
+      white-space: nowrap;
+      color: white;
+      text-shadow: 1px 1px 3px #000;
+      font-size: 17px;
+      font-weight: bold;
+      animation: danmakuMove linear infinite;
       pointer-events: none;
-      animation: floatUp 3s linear forwards;
+    }
+
+    .danmaku:nth-child(2) {
+      top: 12%;
+      animation-duration: 7s;
+    }
+
+    .danmaku:nth-child(3) {
+      top: 27%;
+      animation-duration: 9s;
+      animation-delay: 1s;
+    }
+
+    .danmaku:nth-child(4) {
+      top: 43%;
+      animation-duration: 8s;
+      animation-delay: 2s;
+    }
+
+    .danmaku:nth-child(5) {
+      top: 58%;
+      animation-duration: 10s;
+      animation-delay: 0.5s;
+    }
+
+    .danmaku:nth-child(6) {
+      top: 72%;
+      animation-duration: 8.5s;
+      animation-delay: 3s;
+    }
+
+    .danmaku:nth-child(7) {
+      top: 84%;
+      animation-duration: 7.5s;
+      animation-delay: 1.5s;
+    }
+
+    .payment-result {
+      min-height: 90px;
+      margin: 18px 0;
+      padding: 20px;
+      border-radius: 18px;
+      background: #fff0f5;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    #devilBtn {
+      display: none;
+      background: #222;
+      color: white;
+    }
+
+    #devilBtn.show {
+      display: block;
+      animation: pop 0.4s ease;
+    }
+
+    .final-text {
+      margin-top: 25px;
+      color: #d94f85;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes heartbeat {
@@ -133,143 +367,563 @@
       }
     }
 
-    @keyframes pop {
-      from {
-        transform: scale(0.7);
-        opacity: 0;
+    @keyframes slotShake {
+      0%, 100% {
+        transform: translateY(-3px);
       }
 
-      to {
-        transform: scale(1);
-        opacity: 1;
+      50% {
+        transform: translateY(3px);
       }
     }
 
-    @keyframes floatUp {
+    @keyframes surpriseGlow {
       from {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
+        box-shadow: 0 0 10px #ffb7d2;
       }
 
       to {
-        transform: translateY(-100vh) rotate(360deg);
+        box-shadow: 0 0 30px #ff3e8c;
+      }
+    }
+
+    @keyframes surpriseIn {
+      0% {
         opacity: 0;
+        transform: scale(0.7) rotate(-2deg);
+      }
+
+      70% {
+        transform: scale(1.06) rotate(1deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes danmakuMove {
+      from {
+        left: -100%;
+      }
+
+      to {
+        left: 110%;
       }
     }
 
     @media (max-width: 380px) {
+      .screen {
+        padding: 24px 14px;
+      }
+
       h1 {
         font-size: 24px;
       }
 
-      button {
-        font-size: 14px;
-        padding: 12px 17px;
+      .slot {
+        width: 70px;
+        height: 70px;
+        font-size: 23px;
       }
 
-      .button-area {
-        height: 140px;
+      .marquee-box {
+        height: 300px;
+      }
+
+      .three-photos {
+        gap: 5px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <div class="heart">💗</div>
+  <!-- 第一幕：原本邀請頁 -->
+  <section class="screen active" id="screen1">
+    <div class="big-heart">💗</div>
 
     <h1>有一份特別邀請送給你</h1>
 
     <p>
       親愛的 <strong>❣️BuBu B❣️</strong>，<br>
-      你願意陪我去一次特別嘅生日約會嗎？
+      你願意陪我去一次特別嘅約會嗎？
     </p>
 
-    <div class="details">
-      📅 日期：<strong>2026年10月26日</strong><br>
+    <div class="info-box">
+      📅 日期：<strong>2026年10月25日</strong><br>
       📍 地點：<strong>一陣就知道</strong><br>
       🎁 活動：<strong>一個小小驚喜</strong>
     </div>
 
-    <p>你嘅答案係？</p>
-
-    <button id="yesBtn">我願意 💕</button>
-
-    <div class="button-area">
-      <button id="thinkBtn">等我諗諗 🤔</button>
+    <div class="message-box">
+      BuBu B，今次唔係普通約會，係一個準備咗少少驚喜嘅特別日子。希望你可以留低呢日，同我一齊製造一個屬於我哋嘅回憶。到時你就會知道地點喇 💗
     </div>
 
-    <div id="message">
-      太好啦！到時見！🥰
+    <button class="next-btn" data-next="2">
+      開始驚喜之旅 ➜
+    </button>
+  </section>
+
+  <!-- 第二幕：迷你老虎機 -->
+  <section class="screen" id="screen2">
+    <h1>🎰 迷你老虎機</h1>
+
+    <p>試下抽出你嘅生日獎金！</p>
+
+    <div class="slot-machine">
+      <div class="slot" id="slot1">5.2</div>
+      <div class="slot" id="slot2">52</div>
+      <div class="slot" id="slot3">520</div>
     </div>
-  </div>
+
+    <button class="main-btn" id="spinBtn">開始抽獎 🎰</button>
+
+    <div class="result-box" id="slotResult">
+      等你撳掣抽獎～
+    </div>
+
+    <button class="next-btn" id="slotNext" data-next="3" disabled>
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第三幕：嚇一嚇 -->
+  <section class="screen surprise" id="screen3">
+    <div class="loading-text">
+      <h1>正在準備驚喜……</h1>
+      <p>請稍等一陣 👀</p>
+    </div>
+
+    <div class="hidden-surprise">
+      <h1>首先恭喜你成為父親 🎉</h1>
+
+      <div class="image-box">
+        <img src="catgirl.jpg" alt="父女合照">
+        <div class="caption">
+          父女合照……先等等，其實係貓女合照 😂
+        </div>
+      </div>
+
+      <p>由今日開始，要好好照顧呢位小朋友喇 🐾</p>
+    </div>
+
+    <button class="next-btn" data-next="4">
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第四幕：啤啤年份問答 -->
+  <section class="screen" id="screen4">
+    <h1>🐾 啤啤小測驗</h1>
+
+    <p>
+      貓女叫<strong>啤啤</strong><br>
+      啤啤係咩年份成為屋企成員？
+    </p>
+
+    <div id="catQuizResult" class="quiz-result"></div>
+
+    <button class="option-btn cat-option" data-answer="2022">
+      2022
+    </button>
+
+    <button class="option-btn cat-option" data-answer="2023">
+      2023
+    </button>
+
+    <button class="option-btn cat-option" data-answer="2024">
+      2024
+    </button>
+
+    <button class="next-btn" id="catNext" data-next="5" disabled>
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第五幕：主角彈幕 -->
+  <section class="screen" id="screen5">
+    <h1>🌟 主角登場</h1>
+
+    <div class="marquee-box">
+      <img src="main-character.jpg" alt="主角相片">
+
+      <div class="danmaku">最靚仔嘅 bubu</div>
+      <div class="danmaku">有型嘅 bb</div>
+      <div class="danmaku">大隻嘅布布</div>
+      <div class="danmaku">大啫啫 b li bu</div>
+      <div class="danmaku">米之Lin bubu</div>
+      <div class="danmaku">bubu 大王</div>
+    </div>
+
+    <p>彈幕一致通過：今日主角就係你！😎</p>
+
+    <button class="next-btn" data-next="6">
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第六幕：終極問答 -->
+  <section class="screen" id="screen6">
+    <h1>🏆 終極問答題</h1>
+
+    <div class="info-box">
+      答啱有獎金高達 <strong>5.2</strong>！
+    </div>
+
+    <p>今年係一齊慶祝生日第幾次？</p>
+
+    <div id="birthdayQuizResult" class="quiz-result"></div>
+
+    <button class="option-btn birthday-option" data-answer="3">
+      3次
+    </button>
+
+    <button class="option-btn birthday-option" data-answer="4">
+      4次
+    </button>
+
+    <button class="option-btn birthday-option" data-answer="5">
+      5次
+    </button>
+
+    <button class="next-btn" id="birthdayNext" data-next="7" disabled>
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第七幕：三張生日合照年份題 -->
+  <section class="screen" id="screen7">
+    <h1>📸 生日合照年份題</h1>
+
+    <p>三題全部完成後，先會顯示結果。</p>
+
+    <div class="three-photos">
+      <div class="photo-question">
+        <img src="birthday1.jpg" alt="第一張生日合照">
+
+        <div class="quiz-grid">
+          <button class="option-btn photo-option" data-question="1" data-answer="2022">
+            2022
+          </button>
+
+          <button class="option-btn photo-option" data-question="1" data-answer="2023">
+            2023
+          </button>
+
+          <button class="option-btn photo-option" data-question="1" data-answer="2024">
+            2024
+          </button>
+        </div>
+
+        <div class="photo-status" id="photoStatus1"></div>
+      </div>
+
+      <div class="photo-question">
+        <img src="birthday2.jpg" alt="第二張生日合照">
+
+        <div class="quiz-grid">
+          <button class="option-btn photo-option" data-question="2" data-answer="2023">
+            2023
+          </button>
+
+          <button class="option-btn photo-option" data-question="2" data-answer="2024">
+            2024
+          </button>
+
+          <button class="option-btn photo-option" data-question="2" data-answer="2025">
+            2025
+          </button>
+        </div>
+
+        <div class="photo-status" id="photoStatus2"></div>
+      </div>
+
+      <div class="photo-question">
+        <img src="birthday3.jpg" alt="第三張生日合照">
+
+        <div class="quiz-grid">
+          <button class="option-btn photo-option" data-question="3" data-answer="2022">
+            2022
+          </button>
+
+          <button class="option-btn photo-option" data-question="3" data-answer="2023">
+            2023
+          </button>
+
+          <button class="option-btn photo-option" data-question="3" data-answer="2024">
+            2024
+          </button>
+        </div>
+
+        <div class="photo-status" id="photoStatus3"></div>
+      </div>
+    </div>
+
+    <div id="photoQuizResult" class="quiz-result"></div>
+
+    <button class="next-btn" id="photoNext" data-next="8" disabled>
+      下一頁 ➜
+    </button>
+  </section>
+
+  <!-- 第八幕：生日付款方式 -->
+  <section class="screen" id="screen8">
+    <h1>🎂 最後一題</h1>
+
+    <p>請選擇你嘅生日付款方式</p>
+
+    <button class="option-btn payment-option" data-payment="BOBO">
+      BOBO
+    </button>
+
+    <button class="option-btn payment-option" data-payment="啤啤">
+      啤啤
+    </button>
+
+    <button class="option-btn payment-option" data-payment="零用錢">
+      零用錢
+    </button>
+
+    <button class="option-btn payment-option" data-payment="肉體">
+      肉體
+    </button>
+
+    <div class="payment-result" id="paymentResult">
+      請選擇一個付款方式 💌
+    </div>
+
+    <button class="main-btn" id="devilBtn">
+      😈
+    </button>
+
+    <div class="final-text">
+      生日快樂，BuBu B！🩵
+    </div>
+  </section>
 
   <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const thinkBtn = document.getElementById("thinkBtn");
-    const message = document.getElementById("message");
-    const buttonArea = document.querySelector(".button-area");
+    const screens = document.querySelectorAll(".screen");
 
-    let thinkCount = 0;
+    function showScreen(number) {
+      screens.forEach(function (screen) {
+        screen.classList.remove("active");
+      });
 
-    yesBtn.addEventListener("click", function () {
-      message.style.display = "block";
-      yesBtn.textContent = "期待見到你 ❤️";
-      thinkBtn.style.display = "none";
+      document.getElementById("screen" + number).classList.add("active");
+      window.scrollTo(0, 0);
 
-      for (let i = 0; i < 20; i++) {
-        createHeart();
+      if (number === 3) {
+        setTimeout(function () {
+          document.getElementById("screen3").classList.add("revealed");
+        }, 800);
       }
+    }
+
+    document.querySelectorAll("[data-next]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const nextNumber = Number(button.dataset.next);
+        showScreen(nextNumber);
+      });
     });
 
-    thinkBtn.addEventListener("click", function () {
-      thinkCount++;
+    // 迷你老虎機：最後固定停在 52
+    const spinBtn = document.getElementById("spinBtn");
+    const slotResult = document.getElementById("slotResult");
+    const slotNext = document.getElementById("slotNext");
+    const slots = [
+      document.getElementById("slot1"),
+      document.getElementById("slot2"),
+      document.getElementById("slot3")
+    ];
 
-      if (thinkCount >= 3) {
-        thinkBtn.textContent = "好啦好啦，唔走喇 🦄";
-        thinkBtn.style.left = "50%";
-        thinkBtn.style.top = "70px";
-        thinkBtn.style.transform = "translateX(-50%)";
+    let isSpinning = false;
+
+    spinBtn.addEventListener("click", function () {
+      if (isSpinning) {
         return;
       }
 
-      const maxX = Math.max(
-        0,
-        buttonArea.clientWidth - thinkBtn.offsetWidth
-      );
+      isSpinning = true;
+      spinBtn.disabled = true;
+      slotResult.textContent = "抽獎中……";
 
-      const maxY = Math.max(
-        0,
-        buttonArea.clientHeight - thinkBtn.offsetHeight
-      );
+      slots.forEach(function (slot) {
+        slot.classList.add("spinning");
+      });
 
-      const randomX = Math.floor(Math.random() * maxX);
-      const randomY = Math.floor(Math.random() * maxY);
+      let count = 0;
 
-      thinkBtn.style.left = randomX + "px";
-      thinkBtn.style.top = randomY + "px";
-      thinkBtn.style.transform = "none";
+      const rolling = setInterval(function () {
+        slots.forEach(function (slot) {
+          const numbers = ["5.2", "52", "520"];
+          slot.textContent =
+            numbers[Math.floor(Math.random() * numbers.length)];
+        });
+
+        count++;
+
+        if (count >= 18) {
+          clearInterval(rolling);
+
+          slots[0].textContent = "5.2";
+          slots[1].textContent = "52";
+          slots[2].textContent = "520";
+
+          slots.forEach(function (slot) {
+            slot.classList.remove("spinning");
+          });
+
+          slotResult.innerHTML = "🎉 恭喜你！最後結果係 <strong>52</strong>！";
+          slotNext.disabled = false;
+          isSpinning = false;
+        }
+      }, 100);
     });
 
-    function createHeart() {
-      const heart = document.createElement("div");
+    // 啤啤年份問答
+    const catQuizResult = document.getElementById("catQuizResult");
+    const catNext = document.getElementById("catNext");
 
-      heart.className = "floating-heart";
+    document.querySelectorAll(".cat-option").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const answer = button.dataset.answer;
 
-      heart.textContent = ["💛", "🧡", "❤️", "🥰", "✨"][
-        Math.floor(Math.random() * 5)
-      ];
+        if (answer === "2023") {
+          catQuizResult.className = "quiz-result correct";
+          catQuizResult.textContent =
+            "🎉 答啱！啤啤係 2023 年成為屋企成員！";
+          catNext.disabled = false;
+        } else if (answer === "2022") {
+          catQuizResult.className = "quiz-result wrong";
+          catQuizResult.textContent =
+            "😪 唔係呢年呀，再諗吓～";
+        } else {
+          catQuizResult.className = "quiz-result wrong";
+          catQuizResult.textContent =
+            "😥 太遲喇，啤啤已經早就加入我哋啦～";
+        }
+      });
+    });
 
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 2 + Math.random() * 2 + "s";
+    // 終極生日問答
+    const birthdayQuizResult = document.getElementById("birthdayQuizResult");
+    const birthdayNext = document.getElementById("birthdayNext");
 
-      document.body.appendChild(heart);
+    document.querySelectorAll(".birthday-option").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const answer = button.dataset.answer;
 
-      setTimeout(function () {
-        heart.remove();
-      }, 4000);
-    }
+        if (answer === "5") {
+          birthdayQuizResult.className = "quiz-result correct";
+          birthdayQuizResult.textContent =
+            "🩵 答啱！你真係記得，今年係第 5 次！";
+          birthdayNext.disabled = false;
+        } else {
+          birthdayQuizResult.className = "quiz-result wrong";
+          birthdayQuizResult.textContent =
+            "😲🥲🙂 再諗清楚吓喎～";
+        }
+      });
+    });
+
+    // 三張相片年份題
+    const photoAnswers = {
+      1: "2023",
+      2: "2025",
+      3: "2024"
+    };
+
+    const photoSelections = {};
+
+    document.querySelectorAll(".photo-option").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const question = button.dataset.question;
+        const answer = button.dataset.answer;
+
+        photoSelections[question] = answer;
+
+        document.getElementById("photoStatus" + question).textContent = "✓";
+
+        const allAnswered =
+          photoSelections[1] &&
+          photoSelections[2] &&
+          photoSelections[3];
+
+        if (allAnswered) {
+          let allCorrect = true;
+
+          for (let i = 1; i <= 3; i++) {
+            const status = document.getElementById("photoStatus" + i);
+
+            if (photoSelections[i] === photoAnswers[i]) {
+              status.textContent = "❣️";
+            } else {
+              status.textContent = "🌚";
+              allCorrect = false;
+            }
+          }
+
+          const photoQuizResult =
+            document.getElementById("photoQuizResult");
+
+          if (allCorrect) {
+            photoQuizResult.className = "quiz-result correct";
+            photoQuizResult.textContent = "❣️ 全部答啱！";
+          } else {
+            photoQuizResult.className = "quiz-result wrong";
+            photoQuizResult.textContent =
+              "🌚 有啲答案要再諗吓喎～";
+          }
+
+          document.getElementById("photoNext").disabled = false;
+        }
+      });
+    });
+
+    // 最後付款方式
+    const paymentResult = document.getElementById("paymentResult");
+    const devilBtn = document.getElementById("devilBtn");
+
+    document.querySelectorAll(".payment-option").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const payment = button.dataset.payment;
+        devilBtn.classList.remove("show");
+
+        if (payment === "BOBO") {
+          paymentResult.innerHTML =
+            "🥺 BOBO 付款方式，收到你嘅心意喇～";
+        } else if (payment === "啤啤") {
+          paymentResult.innerHTML =
+            "🐾<br>獲得 <strong>$300</strong>";
+        } else if (payment === "零用錢") {
+          paymentResult.innerHTML =
+            "🥳 零用錢付款，開心收款！";
+        } else if (payment === "肉體") {
+          paymentResult.innerHTML =
+            "😈 已選擇神秘付款方式";
+          devilBtn.classList.add("show");
+        }
+      });
+    });
+
+    devilBtn.addEventListener("click", function () {
+      paymentResult.innerHTML =
+        "😈 呢個付款方式要先申請，暫時未能即時兌現 😂";
+    });
   </script>
 </body>
 </html>
-Create invitation webpage
