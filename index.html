@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026 BuBu生日之旅</title>
+  <title>2026 BuBu 生日之旅</title>
 
   <style>
     * {
@@ -266,10 +266,19 @@
       font-size: 12px;
     }
 
+    .photo-option.selected {
+      color: white;
+      background: #e95d91;
+      border-color: #e95d91;
+      transform: scale(0.96);
+    }
+
     .photo-status {
-      min-height: 24px;
-      margin-top: 4px;
-      font-size: 20px;
+      min-height: 28px;
+      margin-top: 6px;
+      color: #c84c7e;
+      font-size: 13px;
+      font-weight: bold;
     }
 
     .marquee-box {
@@ -493,13 +502,13 @@
     </p>
 
     <div class="info-box">
-      📅 日期：<strong>2026年10月26日</strong><br>
+      📅 日期：<strong>2026年10月25日</strong><br>
       📍 地點：<strong>一陣就知道</strong><br>
       🎁 活動：<strong>一個小小驚喜</strong>
     </div>
 
     <div class="message-box">
-      🩵2026 BuBu 生日之旅，希望平凡又開心🩵
+      🩵2026 BuBu 生日之旅 希望平凡又開心🩵
     </div>
 
     <button class="next-btn" data-next="2">
@@ -507,7 +516,7 @@
     </button>
   </section>
 
-  <!-- 第二幕 -->
+  <!-- 第二幕：老虎機 -->
   <section class="screen" id="screen2">
     <h1>🎰 迷你老虎機</h1>
 
@@ -532,7 +541,7 @@
     </button>
   </section>
 
-  <!-- 第三幕 -->
+  <!-- 第三幕：父親驚喜 -->
   <section class="screen surprise" id="screen3">
     <div class="father-first">
       <h1>恭喜你成為父親 🎉</h1>
@@ -558,7 +567,7 @@
     </button>
   </section>
 
-  <!-- 第四幕 -->
+  <!-- 第四幕：啤啤年份問答 -->
   <section class="screen" id="screen4">
     <h1>🐾 啤啤小測驗</h1>
 
@@ -586,7 +595,7 @@
     </button>
   </section>
 
-  <!-- 第五幕 -->
+  <!-- 第五幕：主角彈幕 -->
   <section class="screen" id="screen5">
     <h1>🌟 主角登場</h1>
 
@@ -608,7 +617,7 @@
     </button>
   </section>
 
-  <!-- 第六幕 -->
+  <!-- 第六幕：終極問答 -->
   <section class="screen" id="screen6">
     <h1>🏆 終極問答題</h1>
 
@@ -637,11 +646,13 @@
     </button>
   </section>
 
-  <!-- 第七幕 -->
+  <!-- 第七幕：三張生日相片問答 -->
   <section class="screen" id="screen7">
     <h1>📸 生日合照年份題</h1>
 
-    <p>三題全部完成後，先會顯示結果。</p>
+    <p>
+      每張相片都可以重新揀答案，最後一次選擇會作準。
+    </p>
 
     <div class="three-photos">
       <div class="photo-question">
@@ -712,7 +723,7 @@
     </button>
   </section>
 
-  <!-- 第八幕 -->
+  <!-- 第八幕：付款方式 -->
   <section class="screen" id="screen8">
     <h1>🎂 最後一題</h1>
 
@@ -839,9 +850,12 @@
       }, 100);
     });
 
-    // 第四幕：啤啤年份
-    const catQuizResult = document.getElementById("catQuizResult");
-    const catNext = document.getElementById("catNext");
+    // 第四幕：啤啤年份問答
+    const catQuizResult =
+      document.getElementById("catQuizResult");
+
+    const catNext =
+      document.getElementById("catNext");
 
     document.querySelectorAll(".cat-option").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -849,6 +863,7 @@
           catQuizResult.className = "quiz-result correct";
           catQuizResult.textContent =
             "🎉 答啱！啤啤係 2023 年成為屋企成員！";
+
           catNext.disabled = false;
         } else if (button.dataset.answer === "2022") {
           catQuizResult.className = "quiz-result wrong";
@@ -875,6 +890,7 @@
           birthdayQuizResult.className = "quiz-result correct";
           birthdayQuizResult.textContent =
             "🩵 答啱！你真係記得，今年係第 5 次！";
+
           birthdayNext.disabled = false;
         } else {
           birthdayQuizResult.className = "quiz-result wrong";
@@ -884,59 +900,98 @@
       });
     });
 
-    // 第七幕：三張生日相片
+    // 第七幕：三張生日相片年份題
     const photoAnswers = {
       1: "2023",
       2: "2024",
       3: "2025"
     };
 
-    const photoSelections = {};
+    const photoSelections = {
+      1: null,
+      2: null,
+      3: null
+    };
 
     document.querySelectorAll(".photo-option").forEach(function (button) {
       button.addEventListener("click", function () {
         const question = button.dataset.question;
         const answer = button.dataset.answer;
 
+        // 更新該題最後一次選擇
         photoSelections[question] = answer;
 
-        document.getElementById(
+        // 清除同一題其他按鈕嘅選取狀態
+        const questionButtons = document.querySelectorAll(
+          '.photo-option[data-question="' + question + '"]'
+        );
+
+        questionButtons.forEach(function (item) {
+          item.classList.remove("selected");
+        });
+
+        // 標示目前選擇
+        button.classList.add("selected");
+
+        // 顯示該題目前選擇
+        const status = document.getElementById(
           "photoStatus" + question
-        ).textContent = "✓";
+        );
 
-        if (
-          photoSelections[1] &&
-          photoSelections[2] &&
-          photoSelections[3]
-        ) {
-          let allCorrect = true;
+        status.textContent = "已選：" + answer;
 
-          for (let i = 1; i <= 3; i++) {
-            const status =
-              document.getElementById("photoStatus" + i);
+        const allAnswered =
+          photoSelections[1] !== null &&
+          photoSelections[2] !== null &&
+          photoSelections[3] !== null;
 
-            if (photoSelections[i] === photoAnswers[i]) {
-              status.textContent = "❣️";
-            } else {
-              status.textContent = "🌚";
-              allCorrect = false;
+        const photoQuizResult =
+          document.getElementById("photoQuizResult");
+
+        if (!allAnswered) {
+          const remaining = Object.values(photoSelections).filter(
+            function (value) {
+              return value === null;
             }
-          }
+          ).length;
 
-          const photoQuizResult =
-            document.getElementById("photoQuizResult");
+          photoQuizResult.className = "quiz-result";
+          photoQuizResult.textContent =
+            "仲有 " + remaining + " 題未完成～";
 
-          if (allCorrect) {
-            photoQuizResult.className = "quiz-result correct";
-            photoQuizResult.textContent = "❣️ 全部答啱！";
-          } else {
-            photoQuizResult.className = "quiz-result wrong";
-            photoQuizResult.textContent =
-              "🌚 有啲答案要再諗吓喎～";
-          }
+          document.getElementById("photoNext").disabled = true;
 
-          document.getElementById("photoNext").disabled = false;
+          return;
         }
+
+        let allCorrect = true;
+
+        for (let i = 1; i <= 3; i++) {
+          const currentStatus =
+            document.getElementById("photoStatus" + i);
+
+          if (photoSelections[i] === photoAnswers[i]) {
+            currentStatus.textContent =
+              "✅ " + photoSelections[i] + " 答啱";
+          } else {
+            currentStatus.textContent =
+              "❌ " + photoSelections[i] + " 再諗吓";
+            allCorrect = false;
+          }
+        }
+
+        if (allCorrect) {
+          photoQuizResult.className = "quiz-result correct";
+          photoQuizResult.textContent =
+            "❣️ 全部答啱！可以去下一頁喇～";
+        } else {
+          photoQuizResult.className = "quiz-result wrong";
+          photoQuizResult.textContent =
+            "🌚 有啲答案唔啱，可以重新揀答案再試！";
+        }
+
+        // 三題完成後啟用下一頁
+        document.getElementById("photoNext").disabled = false;
       });
     });
 
@@ -965,6 +1020,7 @@
         } else if (payment === "肉體") {
           paymentResult.innerHTML =
             "😈 已選擇神秘付款方式";
+
           devilBtn.classList.add("show");
         }
       });
