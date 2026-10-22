@@ -180,17 +180,45 @@
       animation: surpriseGlow 1.2s infinite alternate;
     }
 
+    .loading-text {
+      min-height: 280px;
+      padding-top: 75px;
+      color: #ffb7d2;
+    }
+
+    .loading-text h1 {
+      animation: loadingPulse 1.2s infinite;
+    }
+
     .hidden-surprise {
       display: none;
     }
 
     .surprise.revealed .hidden-surprise {
       display: block;
-      animation: surpriseIn 0.6s ease;
     }
 
     .surprise.revealed .loading-text {
       display: none;
+    }
+
+    #catRevealText {
+      display: none;
+      color: #ffb7d2;
+      animation: pop 0.6s ease;
+    }
+
+    .surprise.cat-revealed #catRevealText {
+      display: block;
+    }
+
+    .father-message {
+      display: none;
+      animation: surpriseIn 0.6s ease;
+    }
+
+    .surprise.father-revealed .father-message {
+      display: block;
     }
 
     .quiz-result {
@@ -371,6 +399,18 @@
       }
     }
 
+    @keyframes loadingPulse {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+
     @keyframes slotShake {
       0%, 100% {
         transform: translateY(-3px);
@@ -507,25 +547,36 @@
     </button>
   </section>
 
-  <!-- 第三幕：嚇一嚇 -->
+  <!-- 第三幕：8秒驚喜 -->
   <section class="screen surprise" id="screen3">
     <div class="loading-text">
       <h1>正在準備驚喜……</h1>
       <p>請稍等一陣 👀</p>
+      <p>倒數緊……</p>
     </div>
 
     <div class="hidden-surprise">
-      <h1>首先恭喜你成為父親 🎉</h1>
+      <h2 id="catRevealText">
+        係貓女合照 🐾
+      </h2>
+
+      <div class="father-message">
+        <h1>
+          首先恭喜你成為父親 🎉
+        </h1>
+      </div>
 
       <div class="image-box">
-        <img src="IMG_4622.jpeg" alt="父女合照">
+        <img src="IMG_4622.jpeg" alt="貓女合照">
 
         <div class="caption">
           父女合照……先等等，其實係貓女合照 😂
         </div>
       </div>
 
-      <p>由今日開始，要好好照顧呢位小朋友喇 🐾</p>
+      <p>
+        由今日開始，要好好照顧呢位小朋友喇 🐾
+      </p>
     </div>
 
     <button class="next-btn" data-next="4">
@@ -576,7 +627,9 @@
       <div class="danmaku">bubu 大王</div>
     </div>
 
-    <p>彈幕一致通過：今日主角就係你！😎</p>
+    <p>
+      彈幕一致通過：今日主角就係你！😎
+    </p>
 
     <button class="next-btn" data-next="6">
       下一頁 ➜
@@ -591,7 +644,9 @@
       答啱有獎金高達 <strong>5.2</strong>！
     </div>
 
-    <p>今年係一齊慶祝生日第幾次？</p>
+    <p>
+      今年係一齊慶祝生日第幾次？
+    </p>
 
     <div id="birthdayQuizResult" class="quiz-result"></div>
 
@@ -612,11 +667,13 @@
     </button>
   </section>
 
-  <!-- 第七幕：三張生日合照年份題 -->
+  <!-- 第七幕：生日合照年份題 -->
   <section class="screen" id="screen7">
     <h1>📸 生日合照年份題</h1>
 
-    <p>三題全部完成後，先會顯示結果。</p>
+    <p>
+      三題全部完成後，先會顯示結果。
+    </p>
 
     <div class="three-photos">
       <div class="photo-question">
@@ -691,7 +748,9 @@
   <section class="screen" id="screen8">
     <h1>🎂 最後一題</h1>
 
-    <p>請選擇你嘅生日付款方式</p>
+    <p>
+      請選擇你嘅生日付款方式
+    </p>
 
     <button class="option-btn payment-option" data-payment="BOBO">
       BOBO
@@ -731,16 +790,23 @@
       });
 
       const targetScreen = document.getElementById("screen" + number);
-      targetScreen.classList.add("active");
 
+      targetScreen.classList.add("active");
       window.scrollTo(0, 0);
 
       if (number === 3) {
         targetScreen.classList.remove("revealed");
+        targetScreen.classList.remove("cat-revealed");
+        targetScreen.classList.remove("father-revealed");
 
         setTimeout(function () {
           targetScreen.classList.add("revealed");
-        }, 800);
+          targetScreen.classList.add("cat-revealed");
+        }, 8000);
+
+        setTimeout(function () {
+          targetScreen.classList.add("father-revealed");
+        }, 9500);
       }
     }
 
@@ -751,7 +817,7 @@
       });
     });
 
-    // 迷你老虎機：最後固定結果為 52
+    // 迷你老虎機：最後固定中 52
     const spinBtn = document.getElementById("spinBtn");
     const slotResult = document.getElementById("slotResult");
     const slotNext = document.getElementById("slotNext");
@@ -782,6 +848,7 @@
       const rolling = setInterval(function () {
         slots.forEach(function (slot) {
           const numbers = ["5.2", "52", "520"];
+
           slot.textContent =
             numbers[Math.floor(Math.random() * numbers.length)];
         });
@@ -809,8 +876,11 @@
     });
 
     // 啤啤年份問答
-    const catQuizResult = document.getElementById("catQuizResult");
-    const catNext = document.getElementById("catNext");
+    const catQuizResult =
+      document.getElementById("catQuizResult");
+
+    const catNext =
+      document.getElementById("catNext");
 
     document.querySelectorAll(".cat-option").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -891,7 +961,8 @@
         let allCorrect = true;
 
         for (let i = 1; i <= 3; i++) {
-          const status = document.getElementById("photoStatus" + i);
+          const status =
+            document.getElementById("photoStatus" + i);
 
           if (photoSelections[i] === photoAnswers[i]) {
             status.textContent = "❣️";
