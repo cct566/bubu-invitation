@@ -56,6 +56,10 @@
       line-height: 1.8;
     }
 
+    button {
+      font-family: inherit;
+    }
+
     .big-heart {
       margin-top: 20px;
       font-size: 62px;
@@ -490,7 +494,9 @@
       <div class="slot" id="slot3">520</div>
     </div>
 
-    <button class="main-btn" id="spinBtn">開始抽獎 🎰</button>
+    <button class="main-btn" id="spinBtn">
+      開始抽獎 🎰
+    </button>
 
     <div class="result-box" id="slotResult">
       等你撳掣抽獎～
@@ -512,7 +518,8 @@
       <h1>首先恭喜你成為父親 🎉</h1>
 
       <div class="image-box">
-        <img src="catgirl.jpg" alt="父女合照">
+        <img src="IMG_4622.jpeg" alt="父女合照">
+
         <div class="caption">
           父女合照……先等等，其實係貓女合照 😂
         </div>
@@ -559,7 +566,7 @@
     <h1>🌟 主角登場</h1>
 
     <div class="marquee-box">
-      <img src="main-character.jpg" alt="主角相片">
+      <img src="IMG_6758.jpeg" alt="主角相片">
 
       <div class="danmaku">最靚仔嘅 bubu</div>
       <div class="danmaku">有型嘅 bb</div>
@@ -613,7 +620,7 @@
 
     <div class="three-photos">
       <div class="photo-question">
-        <img src="birthday1.jpg" alt="第一張生日合照">
+        <img src="IMG_6536.jpeg" alt="2023年生日合照">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="1" data-answer="2022">
@@ -633,7 +640,7 @@
       </div>
 
       <div class="photo-question">
-        <img src="birthday2.jpg" alt="第二張生日合照">
+        <img src="IMG_4003.jpeg" alt="2024年生日合照">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="2" data-answer="2023">
@@ -653,7 +660,7 @@
       </div>
 
       <div class="photo-question">
-        <img src="birthday3.jpg" alt="第三張生日合照">
+        <img src="IMG_2597.png" alt="2025年生日合照">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="3" data-answer="2022">
@@ -723,12 +730,16 @@
         screen.classList.remove("active");
       });
 
-      document.getElementById("screen" + number).classList.add("active");
+      const targetScreen = document.getElementById("screen" + number);
+      targetScreen.classList.add("active");
+
       window.scrollTo(0, 0);
 
       if (number === 3) {
+        targetScreen.classList.remove("revealed");
+
         setTimeout(function () {
-          document.getElementById("screen3").classList.add("revealed");
+          targetScreen.classList.add("revealed");
         }, 800);
       }
     }
@@ -740,10 +751,11 @@
       });
     });
 
-    // 迷你老虎機：最後固定停在 52
+    // 迷你老虎機：最後固定結果為 52
     const spinBtn = document.getElementById("spinBtn");
     const slotResult = document.getElementById("slotResult");
     const slotNext = document.getElementById("slotNext");
+
     const slots = [
       document.getElementById("slot1"),
       document.getElementById("slot2"),
@@ -787,7 +799,9 @@
             slot.classList.remove("spinning");
           });
 
-          slotResult.innerHTML = "🎉 恭喜你！最後結果係 <strong>52</strong>！";
+          slotResult.innerHTML =
+            "🎉 恭喜你！最後結果係 <strong>52</strong>！";
+
           slotNext.disabled = false;
           isSpinning = false;
         }
@@ -806,6 +820,7 @@
           catQuizResult.className = "quiz-result correct";
           catQuizResult.textContent =
             "🎉 答啱！啤啤係 2023 年成為屋企成員！";
+
           catNext.disabled = false;
         } else if (answer === "2022") {
           catQuizResult.className = "quiz-result wrong";
@@ -820,8 +835,11 @@
     });
 
     // 終極生日問答
-    const birthdayQuizResult = document.getElementById("birthdayQuizResult");
-    const birthdayNext = document.getElementById("birthdayNext");
+    const birthdayQuizResult =
+      document.getElementById("birthdayQuizResult");
+
+    const birthdayNext =
+      document.getElementById("birthdayNext");
 
     document.querySelectorAll(".birthday-option").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -831,6 +849,7 @@
           birthdayQuizResult.className = "quiz-result correct";
           birthdayQuizResult.textContent =
             "🩵 答啱！你真係記得，今年係第 5 次！";
+
           birthdayNext.disabled = false;
         } else {
           birthdayQuizResult.className = "quiz-result wrong";
@@ -840,11 +859,11 @@
       });
     });
 
-    // 三張相片年份題
+    // 三張生日相片年份題
     const photoAnswers = {
       1: "2023",
-      2: "2025",
-      3: "2024"
+      2: "2024",
+      3: "2025"
     };
 
     const photoSelections = {};
@@ -856,51 +875,59 @@
 
         photoSelections[question] = answer;
 
-        document.getElementById("photoStatus" + question).textContent = "✓";
-
         const allAnswered =
           photoSelections[1] &&
           photoSelections[2] &&
           photoSelections[3];
 
-        if (allAnswered) {
-          let allCorrect = true;
+        if (!allAnswered) {
+          document.getElementById(
+            "photoStatus" + question
+          ).textContent = "✓";
 
-          for (let i = 1; i <= 3; i++) {
-            const status = document.getElementById("photoStatus" + i);
-
-            if (photoSelections[i] === photoAnswers[i]) {
-              status.textContent = "❣️";
-            } else {
-              status.textContent = "🌚";
-              allCorrect = false;
-            }
-          }
-
-          const photoQuizResult =
-            document.getElementById("photoQuizResult");
-
-          if (allCorrect) {
-            photoQuizResult.className = "quiz-result correct";
-            photoQuizResult.textContent = "❣️ 全部答啱！";
-          } else {
-            photoQuizResult.className = "quiz-result wrong";
-            photoQuizResult.textContent =
-              "🌚 有啲答案要再諗吓喎～";
-          }
-
-          document.getElementById("photoNext").disabled = false;
+          return;
         }
+
+        let allCorrect = true;
+
+        for (let i = 1; i <= 3; i++) {
+          const status = document.getElementById("photoStatus" + i);
+
+          if (photoSelections[i] === photoAnswers[i]) {
+            status.textContent = "❣️";
+          } else {
+            status.textContent = "🌚";
+            allCorrect = false;
+          }
+        }
+
+        const photoQuizResult =
+          document.getElementById("photoQuizResult");
+
+        if (allCorrect) {
+          photoQuizResult.className = "quiz-result correct";
+          photoQuizResult.textContent = "❣️ 全部答啱！";
+        } else {
+          photoQuizResult.className = "quiz-result wrong";
+          photoQuizResult.textContent =
+            "🌚 有啲答案要再諗吓喎～";
+        }
+
+        document.getElementById("photoNext").disabled = false;
       });
     });
 
     // 最後付款方式
-    const paymentResult = document.getElementById("paymentResult");
-    const devilBtn = document.getElementById("devilBtn");
+    const paymentResult =
+      document.getElementById("paymentResult");
+
+    const devilBtn =
+      document.getElementById("devilBtn");
 
     document.querySelectorAll(".payment-option").forEach(function (button) {
       button.addEventListener("click", function () {
         const payment = button.dataset.payment;
+
         devilBtn.classList.remove("show");
 
         if (payment === "BOBO") {
@@ -915,6 +942,7 @@
         } else if (payment === "肉體") {
           paymentResult.innerHTML =
             "😈 已選擇神秘付款方式";
+
           devilBtn.classList.add("show");
         }
       });
