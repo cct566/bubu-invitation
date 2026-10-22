@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>給 BuBu B 的生日驚喜</title>
+  <title>2026 嚕嚕生日之旅</title>
 
   <style>
     * {
@@ -77,8 +77,10 @@
     }
 
     .message-box {
-      text-align: left;
+      text-align: center;
       border-left: 5px solid #e95d91;
+      font-weight: bold;
+      color: #c84c7e;
     }
 
     .next-btn,
@@ -150,8 +152,7 @@
       margin: 18px 0;
     }
 
-    .image-box img,
-    .quiz-photo {
+    .image-box img {
       width: 100%;
       max-width: 360px;
       height: auto;
@@ -165,8 +166,9 @@
       font-size: 14px;
     }
 
+    /* 第三幕 */
     .surprise {
-      background: linear-gradient(145deg, #1b1020, #4b1f38);
+      background: #050505;
       color: white;
     }
 
@@ -175,50 +177,37 @@
       color: #ffb7d2;
     }
 
+    .father-first {
+      min-height: 280px;
+      padding-top: 95px;
+      animation: fatherAppear 0.8s ease;
+    }
+
+    .father-first h1 {
+      color: white;
+      font-size: 29px;
+    }
+
+    .father-first p {
+      color: #dddddd;
+    }
+
+    .cat-photo-reveal {
+      display: none;
+      animation: photoReveal 0.8s ease;
+    }
+
+    .surprise.show-cat .father-first {
+      display: none;
+    }
+
+    .surprise.show-cat .cat-photo-reveal {
+      display: block;
+    }
+
     .surprise .image-box img {
       border: 5px solid #ffb7d2;
       animation: surpriseGlow 1.2s infinite alternate;
-    }
-
-    .loading-text {
-      min-height: 280px;
-      padding-top: 75px;
-      color: #ffb7d2;
-    }
-
-    .loading-text h1 {
-      animation: loadingPulse 1.2s infinite;
-    }
-
-    .hidden-surprise {
-      display: none;
-    }
-
-    .surprise.revealed .hidden-surprise {
-      display: block;
-    }
-
-    .surprise.revealed .loading-text {
-      display: none;
-    }
-
-    #catRevealText {
-      display: none;
-      color: #ffb7d2;
-      animation: pop 0.6s ease;
-    }
-
-    .surprise.cat-revealed #catRevealText {
-      display: block;
-    }
-
-    .father-message {
-      display: none;
-      animation: surpriseIn 0.6s ease;
-    }
-
-    .surprise.father-revealed .father-message {
-      display: block;
     }
 
     .quiz-result {
@@ -399,15 +388,37 @@
       }
     }
 
-    @keyframes loadingPulse {
-      0%, 100% {
-        opacity: 0.45;
-        transform: scale(1);
+    @keyframes fatherAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
       }
 
-      50% {
+      to {
         opacity: 1;
-        transform: scale(1.04);
+        transform: scale(1);
+      }
+    }
+
+    @keyframes photoReveal {
+      from {
+        opacity: 0;
+        transform: scale(0.65) rotate(-3deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    @keyframes surpriseGlow {
+      from {
+        box-shadow: 0 0 8px #ffb7d2;
+      }
+
+      to {
+        box-shadow: 0 0 32px #ff3e8c;
       }
     }
 
@@ -418,32 +429,6 @@
 
       50% {
         transform: translateY(3px);
-      }
-    }
-
-    @keyframes surpriseGlow {
-      from {
-        box-shadow: 0 0 10px #ffb7d2;
-      }
-
-      to {
-        box-shadow: 0 0 30px #ff3e8c;
-      }
-    }
-
-    @keyframes surpriseIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.7) rotate(-2deg);
-      }
-
-      70% {
-        transform: scale(1.06) rotate(1deg);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0);
       }
     }
 
@@ -496,7 +481,7 @@
 </head>
 
 <body>
-  <!-- 第一幕：原本邀請頁 -->
+  <!-- 第一幕 -->
   <section class="screen active" id="screen1">
     <div class="big-heart">💗</div>
 
@@ -514,7 +499,7 @@
     </div>
 
     <div class="message-box">
-      BuBu B，今次唔係普通約會，係一個準備咗少少驚喜嘅特別日子。希望你可以留低呢日，同我一齊製造一個屬於我哋嘅回憶。到時你就會知道地點喇 💗
+      🩵2026嚕嚕生日之旅，希望平凡又開心🩵
     </div>
 
     <button class="next-btn" data-next="2">
@@ -522,7 +507,7 @@
     </button>
   </section>
 
-  <!-- 第二幕：迷你老虎機 -->
+  <!-- 第二幕 -->
   <section class="screen" id="screen2">
     <h1>🎰 迷你老虎機</h1>
 
@@ -547,24 +532,15 @@
     </button>
   </section>
 
-  <!-- 第三幕：8秒驚喜 -->
+  <!-- 第三幕 -->
   <section class="screen surprise" id="screen3">
-    <div class="loading-text">
-      <h1>正在準備驚喜……</h1>
-      <p>請稍等一陣 👀</p>
-      <p>倒數緊……</p>
+    <div class="father-first">
+      <h1>恭喜你成為父親 🎉</h1>
+      <p>由今日開始，要好好照顧呢位小朋友喇 👀</p>
     </div>
 
-    <div class="hidden-surprise">
-      <h2 id="catRevealText">
-        係貓女合照 🐾
-      </h2>
-
-      <div class="father-message">
-        <h1>
-          首先恭喜你成為父親 🎉
-        </h1>
-      </div>
+    <div class="cat-photo-reveal">
+      <h2>原來係貓女合照 🐾</h2>
 
       <div class="image-box">
         <img src="IMG_4622.jpeg" alt="貓女合照">
@@ -574,9 +550,7 @@
         </div>
       </div>
 
-      <p>
-        由今日開始，要好好照顧呢位小朋友喇 🐾
-      </p>
+      <p>啤啤正式登場！🐾</p>
     </div>
 
     <button class="next-btn" data-next="4">
@@ -584,7 +558,7 @@
     </button>
   </section>
 
-  <!-- 第四幕：啤啤年份問答 -->
+  <!-- 第四幕 -->
   <section class="screen" id="screen4">
     <h1>🐾 啤啤小測驗</h1>
 
@@ -612,7 +586,7 @@
     </button>
   </section>
 
-  <!-- 第五幕：主角彈幕 -->
+  <!-- 第五幕 -->
   <section class="screen" id="screen5">
     <h1>🌟 主角登場</h1>
 
@@ -627,16 +601,14 @@
       <div class="danmaku">bubu 大王</div>
     </div>
 
-    <p>
-      彈幕一致通過：今日主角就係你！😎
-    </p>
+    <p>彈幕一致通過：今日主角就係你！😎</p>
 
     <button class="next-btn" data-next="6">
       下一頁 ➜
     </button>
   </section>
 
-  <!-- 第六幕：終極問答 -->
+  <!-- 第六幕 -->
   <section class="screen" id="screen6">
     <h1>🏆 終極問答題</h1>
 
@@ -644,9 +616,7 @@
       答啱有獎金高達 <strong>5.2</strong>！
     </div>
 
-    <p>
-      今年係一齊慶祝生日第幾次？
-    </p>
+    <p>今年係一齊慶祝生日第幾次？</p>
 
     <div id="birthdayQuizResult" class="quiz-result"></div>
 
@@ -667,17 +637,15 @@
     </button>
   </section>
 
-  <!-- 第七幕：生日合照年份題 -->
+  <!-- 第七幕 -->
   <section class="screen" id="screen7">
     <h1>📸 生日合照年份題</h1>
 
-    <p>
-      三題全部完成後，先會顯示結果。
-    </p>
+    <p>三題全部完成後，先會顯示結果。</p>
 
     <div class="three-photos">
       <div class="photo-question">
-        <img src="IMG_6536.jpeg" alt="2023年生日合照">
+        <img src="IMG_6536.jpeg" alt="生日合照一">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="1" data-answer="2022">
@@ -697,7 +665,7 @@
       </div>
 
       <div class="photo-question">
-        <img src="IMG_4003.jpeg" alt="2024年生日合照">
+        <img src="IMG_4003.jpeg" alt="生日合照二">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="2" data-answer="2023">
@@ -717,7 +685,7 @@
       </div>
 
       <div class="photo-question">
-        <img src="IMG_2597.png" alt="2025年生日合照">
+        <img src="IMG_2597.png" alt="生日合照三">
 
         <div class="quiz-grid">
           <button class="option-btn photo-option" data-question="3" data-answer="2022">
@@ -744,13 +712,11 @@
     </button>
   </section>
 
-  <!-- 第八幕：生日付款方式 -->
+  <!-- 第八幕 -->
   <section class="screen" id="screen8">
     <h1>🎂 最後一題</h1>
 
-    <p>
-      請選擇你嘅生日付款方式
-    </p>
+    <p>請選擇你嘅生日付款方式</p>
 
     <button class="option-btn payment-option" data-payment="BOBO">
       BOBO
@@ -783,6 +749,7 @@
 
   <script>
     const screens = document.querySelectorAll(".screen");
+    let surpriseTimer = null;
 
     function showScreen(number) {
       screens.forEach(function (screen) {
@@ -790,34 +757,31 @@
       });
 
       const targetScreen = document.getElementById("screen" + number);
-
       targetScreen.classList.add("active");
+
       window.scrollTo(0, 0);
 
+      if (surpriseTimer) {
+        clearTimeout(surpriseTimer);
+        surpriseTimer = null;
+      }
+
       if (number === 3) {
-        targetScreen.classList.remove("revealed");
-        targetScreen.classList.remove("cat-revealed");
-        targetScreen.classList.remove("father-revealed");
+        targetScreen.classList.remove("show-cat");
 
-        setTimeout(function () {
-          targetScreen.classList.add("revealed");
-          targetScreen.classList.add("cat-revealed");
-        }, 8000);
-
-        setTimeout(function () {
-          targetScreen.classList.add("father-revealed");
-        }, 9500);
+        surpriseTimer = setTimeout(function () {
+          targetScreen.classList.add("show-cat");
+        }, 7000);
       }
     }
 
     document.querySelectorAll("[data-next]").forEach(function (button) {
       button.addEventListener("click", function () {
-        const nextNumber = Number(button.dataset.next);
-        showScreen(nextNumber);
+        showScreen(Number(button.dataset.next));
       });
     });
 
-    // 迷你老虎機：最後固定中 52
+    // 第二幕：老虎機
     const spinBtn = document.getElementById("spinBtn");
     const slotResult = document.getElementById("slotResult");
     const slotNext = document.getElementById("slotNext");
@@ -846,9 +810,9 @@
       let count = 0;
 
       const rolling = setInterval(function () {
-        slots.forEach(function (slot) {
-          const numbers = ["5.2", "52", "520"];
+        const numbers = ["5.2", "52", "520"];
 
+        slots.forEach(function (slot) {
           slot.textContent =
             numbers[Math.floor(Math.random() * numbers.length)];
         });
@@ -875,24 +839,18 @@
       }, 100);
     });
 
-    // 啤啤年份問答
-    const catQuizResult =
-      document.getElementById("catQuizResult");
-
-    const catNext =
-      document.getElementById("catNext");
+    // 第四幕：啤啤年份
+    const catQuizResult = document.getElementById("catQuizResult");
+    const catNext = document.getElementById("catNext");
 
     document.querySelectorAll(".cat-option").forEach(function (button) {
       button.addEventListener("click", function () {
-        const answer = button.dataset.answer;
-
-        if (answer === "2023") {
+        if (button.dataset.answer === "2023") {
           catQuizResult.className = "quiz-result correct";
           catQuizResult.textContent =
             "🎉 答啱！啤啤係 2023 年成為屋企成員！";
-
           catNext.disabled = false;
-        } else if (answer === "2022") {
+        } else if (button.dataset.answer === "2022") {
           catQuizResult.className = "quiz-result wrong";
           catQuizResult.textContent =
             "😪 唔係呢年呀，再諗吓～";
@@ -904,7 +862,7 @@
       });
     });
 
-    // 終極生日問答
+    // 第六幕：生日次數
     const birthdayQuizResult =
       document.getElementById("birthdayQuizResult");
 
@@ -913,13 +871,10 @@
 
     document.querySelectorAll(".birthday-option").forEach(function (button) {
       button.addEventListener("click", function () {
-        const answer = button.dataset.answer;
-
-        if (answer === "5") {
+        if (button.dataset.answer === "5") {
           birthdayQuizResult.className = "quiz-result correct";
           birthdayQuizResult.textContent =
             "🩵 答啱！你真係記得，今年係第 5 次！";
-
           birthdayNext.disabled = false;
         } else {
           birthdayQuizResult.className = "quiz-result wrong";
@@ -929,7 +884,7 @@
       });
     });
 
-    // 三張生日相片年份題
+    // 第七幕：三張生日相片
     const photoAnswers = {
       1: "2023",
       2: "2024",
@@ -945,50 +900,47 @@
 
         photoSelections[question] = answer;
 
-        const allAnswered =
+        document.getElementById(
+          "photoStatus" + question
+        ).textContent = "✓";
+
+        if (
           photoSelections[1] &&
           photoSelections[2] &&
-          photoSelections[3];
+          photoSelections[3]
+        ) {
+          let allCorrect = true;
 
-        if (!allAnswered) {
-          document.getElementById(
-            "photoStatus" + question
-          ).textContent = "✓";
+          for (let i = 1; i <= 3; i++) {
+            const status =
+              document.getElementById("photoStatus" + i);
 
-          return;
-        }
-
-        let allCorrect = true;
-
-        for (let i = 1; i <= 3; i++) {
-          const status =
-            document.getElementById("photoStatus" + i);
-
-          if (photoSelections[i] === photoAnswers[i]) {
-            status.textContent = "❣️";
-          } else {
-            status.textContent = "🌚";
-            allCorrect = false;
+            if (photoSelections[i] === photoAnswers[i]) {
+              status.textContent = "❣️";
+            } else {
+              status.textContent = "🌚";
+              allCorrect = false;
+            }
           }
+
+          const photoQuizResult =
+            document.getElementById("photoQuizResult");
+
+          if (allCorrect) {
+            photoQuizResult.className = "quiz-result correct";
+            photoQuizResult.textContent = "❣️ 全部答啱！";
+          } else {
+            photoQuizResult.className = "quiz-result wrong";
+            photoQuizResult.textContent =
+              "🌚 有啲答案要再諗吓喎～";
+          }
+
+          document.getElementById("photoNext").disabled = false;
         }
-
-        const photoQuizResult =
-          document.getElementById("photoQuizResult");
-
-        if (allCorrect) {
-          photoQuizResult.className = "quiz-result correct";
-          photoQuizResult.textContent = "❣️ 全部答啱！";
-        } else {
-          photoQuizResult.className = "quiz-result wrong";
-          photoQuizResult.textContent =
-            "🌚 有啲答案要再諗吓喎～";
-        }
-
-        document.getElementById("photoNext").disabled = false;
       });
     });
 
-    // 最後付款方式
+    // 第八幕：付款方式
     const paymentResult =
       document.getElementById("paymentResult");
 
@@ -1013,7 +965,6 @@
         } else if (payment === "肉體") {
           paymentResult.innerHTML =
             "😈 已選擇神秘付款方式";
-
           devilBtn.classList.add("show");
         }
       });
