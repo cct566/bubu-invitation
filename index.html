@@ -266,10 +266,12 @@
       font-size: 12px;
     }
 
+    /* 被揀中嘅年份按鈕 */
     .photo-option.selected {
       color: white;
       background: #e95d91;
       border-color: #e95d91;
+      box-shadow: 0 5px 12px rgba(233, 93, 145, 0.3);
       transform: scale(0.96);
     }
 
@@ -502,13 +504,13 @@
     </p>
 
     <div class="info-box">
-      📅 日期：<strong>2026年10月25日</strong><br>
+      📅 日期：<strong>2026年10月26日</strong><br>
       📍 地點：<strong>一陣就知道</strong><br>
       🎁 活動：<strong>一個小小驚喜</strong>
     </div>
 
     <div class="message-box">
-      🩵2026 BuBu 生日之旅 希望平凡又開心🩵
+      🩵2026BuBu生日之旅.希望平凡又開心🩵
     </div>
 
     <button class="next-btn" data-next="2">
@@ -516,7 +518,7 @@
     </button>
   </section>
 
-  <!-- 第二幕：老虎機 -->
+  <!-- 第二幕 -->
   <section class="screen" id="screen2">
     <h1>🎰 迷你老虎機</h1>
 
@@ -541,7 +543,7 @@
     </button>
   </section>
 
-  <!-- 第三幕：父親驚喜 -->
+  <!-- 第三幕 -->
   <section class="screen surprise" id="screen3">
     <div class="father-first">
       <h1>恭喜你成為父親 🎉</h1>
@@ -567,7 +569,7 @@
     </button>
   </section>
 
-  <!-- 第四幕：啤啤年份問答 -->
+  <!-- 第四幕 -->
   <section class="screen" id="screen4">
     <h1>🐾 啤啤小測驗</h1>
 
@@ -595,7 +597,7 @@
     </button>
   </section>
 
-  <!-- 第五幕：主角彈幕 -->
+  <!-- 第五幕 -->
   <section class="screen" id="screen5">
     <h1>🌟 主角登場</h1>
 
@@ -617,7 +619,7 @@
     </button>
   </section>
 
-  <!-- 第六幕：終極問答 -->
+  <!-- 第六幕 -->
   <section class="screen" id="screen6">
     <h1>🏆 終極問答題</h1>
 
@@ -646,12 +648,12 @@
     </button>
   </section>
 
-  <!-- 第七幕：三張生日相片問答 -->
+  <!-- 第七幕 -->
   <section class="screen" id="screen7">
     <h1>📸 生日合照年份題</h1>
 
     <p>
-      每張相片都可以重新揀答案，最後一次選擇會作準。
+      每張相片揀一個年份，揀錯可以重新選擇。
     </p>
 
     <div class="three-photos">
@@ -707,8 +709,8 @@
             2023
           </button>
 
-          <button class="option-btn photo-option" data-question="3" data-answer="2024">
-            2024
+          <button class="option-btn photo-option" data-question="3" data-answer="2025">
+            2025
           </button>
         </div>
 
@@ -723,7 +725,7 @@
     </button>
   </section>
 
-  <!-- 第八幕：付款方式 -->
+  <!-- 第八幕 -->
   <section class="screen" id="screen8">
     <h1>🎂 最後一題</h1>
 
@@ -918,22 +920,22 @@
         const question = button.dataset.question;
         const answer = button.dataset.answer;
 
-        // 更新該題最後一次選擇
+        // 記錄該題最後一次選擇
         photoSelections[question] = answer;
 
-        // 清除同一題其他按鈕嘅選取狀態
-        const questionButtons = document.querySelectorAll(
+        // 移除同一張相片其他年份嘅粉紅色
+        const sameQuestionButtons = document.querySelectorAll(
           '.photo-option[data-question="' + question + '"]'
         );
 
-        questionButtons.forEach(function (item) {
+        sameQuestionButtons.forEach(function (item) {
           item.classList.remove("selected");
         });
 
-        // 標示目前選擇
+        // 將最新揀嘅年份變成粉紅色
         button.classList.add("selected");
 
-        // 顯示該題目前選擇
+        // 顯示目前選擇
         const status = document.getElementById(
           "photoStatus" + question
         );
@@ -976,6 +978,7 @@
           } else {
             currentStatus.textContent =
               "❌ " + photoSelections[i] + " 再諗吓";
+
             allCorrect = false;
           }
         }
@@ -990,7 +993,6 @@
             "🌚 有啲答案唔啱，可以重新揀答案再試！";
         }
 
-        // 三題完成後啟用下一頁
         document.getElementById("photoNext").disabled = false;
       });
     });
